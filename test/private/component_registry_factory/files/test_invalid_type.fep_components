@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components xmlns="http://fep.vwgroup.com/fep_sdk/3.0/components">
+    <schema_version>1.0.0</schema_version>
+    <component>
+        <source type="cpp-plugin">
+            test_cpp_plugin_1
+        </source>
+        <iid>ITestPlugin1</iid>
+    </component>
+    <component>
+        <source type="type-not-valid">
+            some_plugin
+        </source>
+        <iid>ISomeInterface</iid>
+    </component>
+</components>

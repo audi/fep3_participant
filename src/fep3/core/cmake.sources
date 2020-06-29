@@ -1,0 +1,56 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+
+set(CORE_DIR ${PROJECT_SOURCE_DIR}/src/fep3/core)
+set(CORE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/core)
+
+########################################################
+#  core api library implementation
+########################################################
+
+set(CORE_SOURCES_PRIVATE
+    ${CORE_DIR}/participant_state_changer.cpp
+    ${CORE_DIR}/data/data_reader.cpp
+    ${CORE_DIR}/data/data_writer.cpp
+)
+
+set(CORE_SOURCES_PUBLIC
+    ${CORE_INCLUDE_DIR}/element_base.h
+    ${CORE_INCLUDE_DIR}/element_configurable.h
+    ${CORE_INCLUDE_DIR}/element_factory.h
+    ${CORE_INCLUDE_DIR}/participant.h
+    ${CORE_INCLUDE_DIR}/participant_executor.hpp
+    ${CORE_INCLUDE_DIR}/participant_state_changer.h
+
+    #for data access
+    ${CORE_INCLUDE_DIR}/data/data_item_queue.h
+    ${CORE_INCLUDE_DIR}/data/data_item_queue_base.h
+    ${CORE_INCLUDE_DIR}/data/data_reader.h
+    ${CORE_INCLUDE_DIR}/data/data_reader_queue.h
+    ${CORE_INCLUDE_DIR}/data/data_writer.h
+    ${CORE_INCLUDE_DIR}/data/dynamic_data_item_queue.h
+
+    #job helper
+    ${CORE_INCLUDE_DIR}/job.h
+
+    #easy include for the user
+    ${PROJECT_SOURCE_DIR}/include/fep3/core.h
+)
+
+set(CORE_LIB_SOURCES ${CORE_SOURCES_PRIVATE} ${CORE_SOURCES_PUBLIC})
+source_group(private FILES ${CORE_SOURCES_PRIVATE})
+source_group(public FILES ${CORE_SOURCES_PUBLIC})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_CORE_LIB_SOURCES ${CORE_LIB_SOURCES})

@@ -1,0 +1,33 @@
+##################################################################
+# @file 
+# Copyright &copy; AUDI AG. All rights reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(COMPONENTS_SCHEDULER_DIR ${PROJECT_SOURCE_DIR}/src/fep3/components/scheduler)
+set(COMPONENTS_SCHEDULER_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/scheduler)
+
+set(COMPONENTS_SCHEDULER_SOURCES_PRIVATE
+)
+
+set(COMPONENTS_SCHEDULER_SOURCES_PUBLIC
+    ${COMPONENTS_SCHEDULER_INCLUDE_DIR}/scheduler_intf.h
+    ${COMPONENTS_SCHEDULER_INCLUDE_DIR}/scheduler_registry_intf.h
+    ${COMPONENTS_SCHEDULER_INCLUDE_DIR}/scheduler_service_intf.h
+    ${COMPONENTS_SCHEDULER_INCLUDE_DIR}/c_intf/scheduler_c_intf.h
+    ${COMPONENTS_SCHEDULER_INCLUDE_DIR}/c_intf/scheduler_service_c_intf.h
+    ${COMPONENTS_SCHEDULER_INCLUDE_DIR}/c_access_wrapper/scheduler_c_access_wrapper.h
+    ${COMPONENTS_SCHEDULER_INCLUDE_DIR}/c_access_wrapper/scheduler_service_c_access_wrapper.h
+)
+
+set(COMPONENTS_SCHEDULER_SOURCES ${COMPONENTS_SCHEDULER_SOURCES_PRIVATE} ${COMPONENTS_SCHEDULER_SOURCES_PUBLIC})
+source_group(components\\scheduler FILES ${COMPONENTS_SCHEDULER_SOURCES})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_SCHEDULER_SOURCES})

@@ -1,0 +1,51 @@
+[
+    //lists available sub properties
+    {
+        "name": "getProperties",
+        "params": {
+            "property_path": "name"
+        },
+        "returns": "prop1,prop2"
+    },
+
+    //lists all available sub properties
+    {
+        "name": "getAllProperties",
+        "params": {
+            "property_path": "name"
+        },
+        "returns": "path/prop1,path/prop2,path/subpath/prop"
+    },
+
+    //gets information if a specific property exists
+    {
+        "name": "exists",
+        "params": {
+            "property_path": "name"
+        },
+        "returns": true
+    },
+
+    //gets the value of a specific property
+    {
+        "name": "getProperty",
+        "params": {
+            "property_path": "name"
+        },
+        "returns": {
+            "value": "value",
+            "type": "type"
+        }
+    },
+
+    //sets a property of a named graph object
+    {
+        "name": "setProperty",
+        "params": {
+            "property_path": "name",
+            "value": "value",
+            "type": "type"
+        },
+        "returns": 0 // error code
+    }
+]

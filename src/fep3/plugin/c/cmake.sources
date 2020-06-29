@@ -1,0 +1,47 @@
+##################################################################
+# @file
+# @copyright AUDI AG
+#            All right reserved.
+#
+# This Source Code Form is subject to the terms of the
+# Mozilla Public License, v. 2.0.
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+##################################################################
+set(PLUGIN_C_DIR ${PROJECT_SOURCE_DIR}/src/fep3/plugin/c)
+set(PLUGIN_C_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/plugin/c)
+
+set(PLUGIN_C_SOURCES_PRIVATE
+    ${PLUGIN_C_DIR}/c_host_plugin.h
+    ${PLUGIN_C_DIR}/c_host_plugin.cpp
+)
+
+set(PLUGIN_C_SOURCES_PUBLIC
+    ${PLUGIN_C_INCLUDE_DIR}/c_plugin_intf.h
+    ${PLUGIN_C_INCLUDE_DIR}/destruction_manager.h
+    ${PLUGIN_C_INCLUDE_DIR}/destructor_intf.h
+    ${PLUGIN_C_INCLUDE_DIR}/shared_binary_intf.h
+    ${PLUGIN_C_INCLUDE_DIR}/shared_binary_manager.h
+    # sub directory c_access
+    ${PLUGIN_C_INCLUDE_DIR}/c_access/c_access_exception.h
+    ${PLUGIN_C_INCLUDE_DIR}/c_access/c_access_helper.h
+    ${PLUGIN_C_INCLUDE_DIR}/c_access/destructor_c_access.h
+    ${PLUGIN_C_INCLUDE_DIR}/c_access/shared_binary_c_access.h
+    # sub directory c_intf
+    ${PLUGIN_C_INCLUDE_DIR}/c_intf/c_intf_errors.h
+    ${PLUGIN_C_INCLUDE_DIR}/c_intf/destruction_manager_c_intf.h
+    ${PLUGIN_C_INCLUDE_DIR}/c_intf/shared_binary_c_intf.h
+    # sub directory c_wrapper
+    ${PLUGIN_C_INCLUDE_DIR}/c_wrapper/c_wrapper_helper.h
+    ${PLUGIN_C_INCLUDE_DIR}/c_wrapper/destructor_c_wrapper.h
+    ${PLUGIN_C_INCLUDE_DIR}/c_wrapper/shared_binary_c_wrapper.h
+)
+
+set(PLUGIN_C_SOURCES ${PLUGIN_C_SOURCES_PRIVATE} ${PLUGIN_C_SOURCES_PUBLIC})
+source_group(plugin\\c FILES ${PLUGIN_C_SOURCES})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${PLUGIN_C_SOURCES})

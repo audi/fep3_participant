@@ -1,0 +1,41 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+
+set(CPP_DIR ${PROJECT_SOURCE_DIR}/src/fep3/cpp)
+set(CPP_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/cpp)
+
+########################################################
+#  fep interface cpp implementation
+########################################################
+
+
+set(CPP_SOURCES_PRIVATE
+    ${CPP_DIR}/datajob.cpp
+)
+
+set(CPP_SOURCES_PUBLIC
+    ${CPP_INCLUDE_DIR}/element_base.h
+    ${CPP_INCLUDE_DIR}/participant.h
+    ${CPP_INCLUDE_DIR}/datajob.h
+
+    #easy include for the user
+    ${PROJECT_SOURCE_DIR}/include/fep3/cpp.h
+)
+
+set(CPP_LIB_SOURCES ${CPP_SOURCES_PRIVATE} ${CPP_SOURCES_PUBLIC})
+source_group(private FILES ${CPP_SOURCES_PRIVATE})
+source_group(public FILES ${CPP_SOURCES_PUBLIC})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_CPP_LIB_SOURCES ${CPP_LIB_SOURCES})

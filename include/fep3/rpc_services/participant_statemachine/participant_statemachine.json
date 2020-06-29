@@ -1,0 +1,47 @@
+[
+    // triggers the loading process of the participant's statemachine
+    {
+        "name": "load",
+        "returns": false
+    },
+    // triggers the unloading process of the participant's statemachine
+    {
+        "name": "unload",
+        "returns": false
+    },
+    // triggers the participant to exit
+    {
+        "name": "exit",
+        "returns": false
+    },
+    // triggers the initialization of the participant's statemachine
+    {
+        "name": "initialize",
+        "returns": false
+    },
+    // triggers the deinitialization of the participant's statemachine
+    {
+        "name": "deinitialize",
+        "returns": false
+    },
+    // triggers start of synchronization of the participant's statemachine
+    {
+        "name": "start",
+        "returns": false
+    },
+    // triggers the reinitialization of the participant's statemachine
+    {
+        "name": "stop",
+        "returns": false
+    },
+    // triggers the participant's statemachine to run (i. e. to enter the "normal" simulation mode)
+    {
+        "name": "pause",
+        "returns": false
+    },
+    // gets the string representation of the current state of the participants statemachine
+    {
+        "name": "getCurrentStateName",
+        "returns": "state_name"
+    }
+]

@@ -1,0 +1,13 @@
+[
+  // returns a comma seperated list of names of all registered schedulers
+  {
+    "name": "getSchedulerNames",
+    "returns": "name1,name2"
+  },
+
+  // returns the name of the current active clock
+  {
+    "name": "getActiveSchedulerName",
+    "returns": "name1"
+  }
+]

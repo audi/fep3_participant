@@ -1,0 +1,13 @@
+[
+  // sync time event to synchronize the time between timing master and slave
+  // only applicable for clocks of type discrete
+  {
+    "name": "syncTimeEvent",
+    "params": {
+      "event_id": 1,
+      "old_time": "int64_time",
+      "new_time": "int64_time"
+    },
+    "returns": "int64_time" //nanosec
+  }
+]

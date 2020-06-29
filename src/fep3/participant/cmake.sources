@@ -1,0 +1,93 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+
+
+set(PARTICIPANT_DIR ${PROJECT_SOURCE_DIR}/src/fep3/participant)
+set(PARTICIPANT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/participant)
+set(RPC_SERVICES_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/rpc_services)
+set(RPC_SERVICES_INCLUDE_BINARY_DIR ${PROJECT_BINARY_DIR}/include/fep3/rpc_services)
+
+########################################################
+#  rpc service generation
+########################################################
+
+file(MAKE_DIRECTORY ${RPC_SERVICES_INCLUDE_BINARY_DIR}/participant_statemachine)
+jsonrpc_generate_client_stub(${RPC_SERVICES_INCLUDE_DIR}/participant_statemachine/participant_statemachine.json 
+                             fep3::rpc::arya::ParticipantStateMachineClientStub
+                             ${RPC_SERVICES_INCLUDE_BINARY_DIR}/participant_statemachine/participant_statemachine_client_stub.h)
+jsonrpc_generate_server_stub(${RPC_SERVICES_INCLUDE_DIR}/participant_statemachine/participant_statemachine.json 
+                             fep3::rpc::arya::ParticipantStateMachineServiceStub
+                             ${RPC_SERVICES_INCLUDE_BINARY_DIR}/participant_statemachine/participant_statemachine_service_stub.h)
+
+
+########################################################
+#  participant implementation
+########################################################
+
+
+set(PARTICIPANT_SOURCES_PRIVATE
+    ${PARTICIPANT_DIR}/participant.cpp
+    ${PARTICIPANT_DIR}/element_manager/element_manager.cpp
+    ${PARTICIPANT_DIR}/element_manager/element_manager.h
+    ${PARTICIPANT_DIR}/component_source_type.h
+    ${PARTICIPANT_DIR}/component_source_type.cpp
+    # sub directory "component_factories"
+    ${PARTICIPANT_DIR}/component_factories/component_factory_base.h
+    ${PARTICIPANT_DIR}/component_factories/built_in/component_factory_built_in.h
+    ${PARTICIPANT_DIR}/component_factories/built_in/component_factory_built_in.cpp
+    ${PARTICIPANT_DIR}/component_factories/cpp/component_factory_cpp_plugins.h
+    ${PARTICIPANT_DIR}/component_factories/cpp/component_factory_cpp_plugins.cpp
+    ${PARTICIPANT_DIR}/component_factories/c/component_creator_c_plugin.h
+    ${PARTICIPANT_DIR}/component_factories/c/component_factory_c_plugins.h
+    ${PARTICIPANT_DIR}/component_factories/c/component_factory_c_plugins.cpp
+    # sub directory "component_registry_factory"
+    ${PARTICIPANT_DIR}/component_registry_factory/component_registry_factory.cpp
+    ${PARTICIPANT_DIR}/component_registry_factory/component_registry_factory.h
+    ${PARTICIPANT_DIR}/component_registry_factory/components_file.cpp
+    ${PARTICIPANT_DIR}/component_registry_factory/components_file.h
+    # sub directory "state_machine"
+    ${PARTICIPANT_DIR}/state_machine/participant_state_machine.cpp
+    ${PARTICIPANT_DIR}/state_machine/participant_state_machine.h
+    
+)
+
+set(PARTICIPANT_SOURCES_PUBLIC
+    ${PARTICIPANT_INCLUDE_DIR}/element_intf.h
+    ${PARTICIPANT_INCLUDE_DIR}/element_factory_intf.h
+    ${PARTICIPANT_INCLUDE_DIR}/participant.h
+)
+
+set(PARTICIPANT_SOURCES_GERNERATED
+    ${RPC_SERVICES_INCLUDE_BINARY_DIR}/participant_statemachine/participant_statemachine_service_stub.h
+    ${RPC_SERVICES_INCLUDE_BINARY_DIR}/participant_statemachine/participant_statemachine_client_stub.h
+    ${RPC_SERVICES_INCLUDE_DIR}/participant_statemachine/participant_statemachine.json
+)
+
+set(PARTICIPANT_SOURCES ${PARTICIPANT_SOURCES_PRIVATE} ${PARTICIPANT_SOURCES_PUBLIC} ${PARTICIPANT_SOURCES_GERNERATED})
+source_group(participant\\private FILES ${PARTICIPANT_SOURCES_PRIVATE})
+source_group(participant\\public FILES ${PARTICIPANT_SOURCES_PUBLIC})
+source_group(participant\\generated FILES ${PARTICIPANT_SOURCES_GERNERATED})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${PARTICIPANT_SOURCES})
+
+######################################
+# install the generated
+######################################
+
+install(FILES 
+    ${RPC_SERVICES_INCLUDE_BINARY_DIR}/participant_statemachine/participant_statemachine_service_stub.h
+    ${RPC_SERVICES_INCLUDE_BINARY_DIR}/participant_statemachine/participant_statemachine_client_stub.h
+    DESTINATION
+    include/fep3/rpc_services/participant_statemachine)

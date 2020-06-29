@@ -1,0 +1,26 @@
+[
+  // returns a comma seperated list of the names of all registered jobs
+
+  {
+    "name": "getJobNames",
+    "returns": "name1,name2"
+  },
+
+  // returns the job info for a specific job
+  {
+    "name": "getJobInfo",
+    "params": {
+      "job_name": "name1"
+    },
+    "returns": {
+        "job_name" : "name1",
+        "job_configuration": {
+          "cycle_sim_time": "cycle_time",
+          "delay_sim_time": "delay_time",
+          "max_runtime_real_time": "max_runtime",
+          "runtime_violation_strategy": "runtime_violation_strategy",
+          "jobs_this_depends_on": "job_name1,job_name2"
+        }
+      }
+    }
+]

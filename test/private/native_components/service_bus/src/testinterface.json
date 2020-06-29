@@ -1,0 +1,37 @@
+[
+    // returns a comma sperated list of RPC objects
+    {
+        "name": "GetObjects",        
+        "returns": "Object1,Object2"
+    },
+
+    // returns the interface id of an RPC object
+    {
+        "name": "GetRPCIIDForObject",
+        "params": { 
+            "strObject": "Object1"
+        },
+        "returns": "InterfaceID"
+    },
+
+    // returns the current runlevel
+    {
+        "name": "GetRunlevel",        
+        "returns": 1
+    },
+
+    // changes the current runlevel
+    {
+        "name": "SetRunlevel",        
+        "params": { 
+            "nRunLevel": 1
+        },
+        "returns": {
+            "ErrorCode": 0,
+            "Description": "no error",
+            "Line": 0,
+            "File": "file.cpp",
+            "Function": "foo"
+        }
+    }
+]

@@ -1,0 +1,32 @@
+##################################################################
+# @file 
+# Copyright &copy; AUDI AG. All rights reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(COMPONENTS_JOB_REGISTRY_DIR ${PROJECT_SOURCE_DIR}/src/fep3/components/job_registry)
+set(COMPONENTS_JOB_REGISTRY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/job_registry)
+
+set(COMPONENTS_JOB_REGISTRY_SOURCES_PRIVATE
+)
+
+set(COMPONENTS_JOB_REGISTRY_SOURCES_PUBLIC
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/job_intf.h
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/job_registry_intf.h
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/c_intf/job_c_intf.h
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/c_intf/job_registry_c_intf.h
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/c_access_wrapper/job_c_access_wrapper.h
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/c_access_wrapper/job_registry_c_access_wrapper.h
+)
+
+set(COMPONENTS_JOB_REGISTRY_SOURCES ${COMPONENTS_JOB_REGISTRY_SOURCES_PRIVATE} ${COMPONENTS_JOB_REGISTRY_SOURCES_PUBLIC})
+source_group(components\\job_registry FILES ${COMPONENTS_JOB_REGISTRY_SOURCES})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_JOB_REGISTRY_SOURCES})

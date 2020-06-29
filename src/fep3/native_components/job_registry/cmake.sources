@@ -1,0 +1,67 @@
+##################################################################
+# @file 
+# Copyright &copy; AUDI AG. All rights reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(COMPONENTS_JOB_REGISTRY_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/job_registry)
+set(COMPONENTS_JOB_REGISTRY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/job_registry)
+
+set(COMPONENTS_JOB_REGISTRY_SOURCES_PRIVATE
+    ${COMPONENTS_JOB_REGISTRY_DIR}/job_registry_impl.h
+    ${COMPONENTS_JOB_REGISTRY_DIR}/job_registry_impl.cpp  
+    ${COMPONENTS_JOB_REGISTRY_DIR}/local_job_registry.h
+    ${COMPONENTS_JOB_REGISTRY_DIR}/local_job_registry.cpp
+    ${COMPONENTS_JOB_REGISTRY_DIR}/timing_configuration.h  
+    ${COMPONENTS_JOB_REGISTRY_DIR}/timing_configuration.cpp  
+)
+
+set(COMPONENTS_JOB_REGISTRY_SOURCES_PUBLIC
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/job_configuration.h
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/job_info.h
+    ${COMPONENTS_JOB_REGISTRY_INCLUDE_DIR}/job_registry_intf.h
+)
+
+set(COMPONENTS_JOB_REGISTRY_SOURCES ${COMPONENTS_JOB_REGISTRY_SOURCES_PRIVATE} ${COMPONENTS_JOB_REGISTRY_SOURCES_PUBLIC})
+source_group(components\\job_registry FILES ${COMPONENTS_JOB_REGISTRY_SOURCES})
+
+##################################################################
+# RPC
+##################################################################
+set(COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR ${PROJECT_BINARY_DIR}/include/fep3/rpc_services/job_registry)
+set(COMPONENTS_JOB_REGISTRY_RPC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/rpc_services/job_registry)
+
+# subtle difference: on unix the jsonrpc_generate_stub command silently fails if the output directory does not exist...
+file(MAKE_DIRECTORY ${COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR})
+
+jsonrpc_generate_server_stub(${COMPONENTS_JOB_REGISTRY_RPC_INCLUDE_DIR}/job_registry.json
+                             fep3::rpc_stubs::RPCJobRegistryServiceStub
+                             ${COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR}/job_registry_service_stub.h)
+jsonrpc_generate_client_stub(${COMPONENTS_JOB_REGISTRY_RPC_INCLUDE_DIR}/job_registry.json
+                             fep3::rpc_stubs::RPCJobRegistryClientStub
+                             ${COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR}/job_registry_client_stub.h)
+
+set(COMPONENTS_JOB_REGISTRY_RPC_SOURCES
+    ${COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR}/job_registry_service_stub.h
+    ${COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR}/job_registry_client_stub.h
+    ${COMPONENTS_JOB_REGISTRY_RPC_INCLUDE_DIR}/job_registry.json
+    ${COMPONENTS_JOB_REGISTRY_RPC_INCLUDE_DIR}/job_registry_rpc_intf_def.h
+)
+
+source_group(components\\job_registry\\rpc FILES ${COMPONENTS_JOB_REGISTRY_RPC_SOURCES})
+
+install(FILES 
+    ${COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR}/job_registry_service_stub.h
+    ${COMPONENTS_JOB_REGISTRY_RPC_BINARY_DIR}/job_registry_client_stub.h
+    DESTINATION
+    include/fep3/rpc_services/job_registry)
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_JOB_REGISTRY_SOURCES})
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_JOB_REGISTRY_RPC_SOURCES})

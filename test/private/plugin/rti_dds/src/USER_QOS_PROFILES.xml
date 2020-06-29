@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.0.1/rti_dds_qos_profiles.xsd"
+    version="6.0.1">
+    <qos_library name="fep3">
+        <qos_profile name="participant" 
+            is_default_qos="true">
+            <participant_factory_qos>
+              <logging>
+                  <output_file>rti_dds_log.txt</output_file>
+                  <verbosity>WARNING</verbosity>
+                  <category>ALL</category>
+                  <print_format>TIMESTAMPED</print_format>                  
+              </logging>
+            </participant_factory_qos>
+            <participant_qos base_name="BuiltinQosLib::Generic.Participant.LargeData">
+			  <resource_limits>
+				  <participant_user_data_max_length>2048</participant_user_data_max_length>
+		      </resource_limits>
+              <property> 
+                <value> 
+                    <element>
+                       <name>rti.monitor.library</name>
+                       <value>rtimonitoring</value>
+                    </element>
+                    <element>
+                        <name>rti.monitor.create_function</name>
+                        <value>RTIDefaultMonitor_create</value>
+                    </element>
+                </value> 
+              </property>
+              <database>
+                  <shutdown_timeout>
+                    <sec>1</sec>
+                    <nanosec>0</nanosec>
+                  </shutdown_timeout>
+                  <shutdown_cleanup_period>
+                    <sec>0</sec>
+                    <nanosec>1000000</nanosec>
+                  </shutdown_cleanup_period>
+              </database>
+            </participant_qos>
+            <publisher_qos> 
+                <presentation> 
+                    <ordered_access>true</ordered_access> 
+                    <access_scope>GROUP_PRESENTATION_QOS</access_scope> 
+                </presentation> 
+            </publisher_qos>
+            <subscriber_qos>
+                <presentation>
+                    <ordered_access>true</ordered_access> 
+                    <access_scope>GROUP_PRESENTATION_QOS</access_scope> 
+                </presentation>
+            </subscriber_qos>
+        </qos_profile>
+        <qos_profile name="largedata"
+            base_name="BuiltinQosLibExp::Generic.StrictReliable.LargeData.FastFlow">
+            <datawriter_qos>
+              <property>
+                <value>
+                  <element>
+                    <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                    <value>100000</value>
+                  </element>  
+                 </value>
+               </property>
+               <durability>
+                  <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+               </durability>
+               <resource_limits>
+                   <max_samples>100</max_samples>
+               </resource_limits>
+               <history>
+                  <kind>KEEP_ALL_HISTORY_QOS</kind>
+               </history>
+             </datawriter_qos>
+             <datareader_qos>
+               <history>
+                  <kind>KEEP_ALL_HISTORY_QOS</kind>
+               </history>
+               <durability>
+                  <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+               </durability>
+               <resource_limits>
+                   <max_samples>100</max_samples>
+               </resource_limits>
+             </datareader_qos>
+        </qos_profile>
+        <qos_profile name="smalldata"
+            base_name="BuiltinQosLibExp::Generic.StrictReliable">
+            <datawriter_qos>
+              <property>
+                <value>
+                  <element>
+                    <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                    <value>100000</value>
+                  </element>  
+                 </value>
+               </property>  
+               <durability>
+                  <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+               </durability>               
+             </datawriter_qos>
+             <datareader_qos>
+               <history>
+                  <kind>KEEP_ALL_HISTORY_QOS</kind>
+               </history>
+               <durability>
+                  <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+               </durability>
+             </datareader_qos>
+        </qos_profile>
+        
+        <!-- QOS of predefined StreamTypes -->
+        <qos_profile name="video" 
+            base_name="largedata">
+        </qos_profile>
+        <qos_profile name="audio" 
+            base_name="largedata">
+        </qos_profile>
+        <qos_profile name="raw" 
+            base_name="largedata">
+        </qos_profile>
+        <qos_profile name="plain_ctype" 
+            base_name="smalldata">
+        </qos_profile>
+        <qos_profile name="plain_ctype_array" 
+            base_name="smalldata">
+        </qos_profile>
+        <qos_profile name="ddl" 
+            base_name="smalldata">
+        </qos_profile>
+        
+        <!-- QOS of StreamType topic -->
+        <qos_profile name="stream_type" 
+            base_name="BuiltinQosLibExp::Generic.StrictReliable">
+            <datawriter_qos>
+              <property>
+                <value>
+                  <element>
+                    <name>dds.data_writer.history.memory_manager.fast_pool.pool_buffer_max_size</name>
+                    <value>100000</value>
+                  </element>  
+                 </value>
+               </property>  
+               <history>
+                  <kind>KEEP_ALL_HISTORY_QOS</kind>
+               </history>
+               <durability>
+                  <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+               </durability>
+             </datawriter_qos>
+             <datareader_qos>
+               <history>
+                  <kind>KEEP_ALL_HISTORY_QOS</kind>
+               </history>
+               <durability>
+                  <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+               </durability>
+             </datareader_qos>
+             
+        </qos_profile>
+        
+    </qos_library>
+</dds>

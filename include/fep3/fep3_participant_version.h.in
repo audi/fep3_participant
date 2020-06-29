@@ -1,0 +1,43 @@
+/**
+ * @file 
+ * @copyright AUDI AG
+ *            All right reserved.
+ * 
+ * This Source Code Form is subject to the terms of the 
+ * Mozilla Public License, v. 2.0. 
+ * If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ * 
+ */
+
+#ifndef _FEP3_PARTICIPANT_LIBRARY_VERSION_HEADER_
+#define _FEP3_PARTICIPANT_LIBRARY_VERSION_HEADER_
+
+///This is a version identifier may be used together with any version information of the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_VERSION_ID       "fep3_participant"
+///major version number of the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_VERSION_MAJOR    @FEP3_PARTICIPANT_LIBRARY_VERSION_MAJOR@
+///minor version number of the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_VERSION_MINOR    @FEP3_PARTICIPANT_LIBRARY_VERSION_MINOR@
+///patch version number of the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_VERSION_PATCH    @FEP3_PARTICIPANT_LIBRARY_VERSION_PATCH@
+///build version number of the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_VERSION_BUILD    @FEP3_PARTICIPANT_LIBRARY_BUILD_NR@
+
+///version number as string of the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_VERSION_STR      "@FEP3_PARTICIPANT_LIBRARY_VERSION_MAJOR@.@FEP3_PARTICIPANT_LIBRARY_VERSION_MINOR@.@FEP3_PARTICIPANT_LIBRARY_VERSION_PATCH@@BETA_FLAG@"
+
+///version label for the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_VERSION_LABEL    "FEP3 Participant Library\n" \
+                                    "Version " FEP3_PARTICIPANT_LIBRARY_VERSION_STR "\n" \
+                                    "Build @FEP3_PARTICIPANT_LIBRARY_BUILD_NR@\n" \
+                                    "Copyright (c) AUDI AG. " \
+                                    "All rights reserved."
+
+///platform label for the fep3 participant library
+#define FEP3_PARTICIPANT_LIBRARY_PLATFORM_STR     "@PLATFORM@"
+
+///efinition for shared lib or static lib
+#define FEP3_PARTICIPANT_LIBRARY_SHARED_LIB
+
+#endif  // _FEP3_PARTICIPANT_LIBRARY_VERSION_HEADER_

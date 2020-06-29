@@ -1,0 +1,36 @@
+module fep3 {
+  module ddstypes {
+    
+      struct Property
+      {
+        string<256>    name;
+        string<64>     type;
+        string         value;
+      };
+        
+      struct StreamType
+      {
+        string             metatype;
+        sequence<Property> properties;
+      };
+
+      struct Sample
+      {
+        sequence<octet> data;
+      };
+      
+      enum StreamItemType
+      {
+        SAMPLE,
+        STREAMTYPE
+      };
+      
+      union StreamItem switch (StreamItemType)
+      {
+        case STREAMTYPE: 
+          StreamType streamtype;
+        case SAMPLE: 
+          Sample sample;
+      };
+  };
+};

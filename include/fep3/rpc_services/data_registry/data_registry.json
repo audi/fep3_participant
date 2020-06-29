@@ -1,0 +1,29 @@
+[
+    // returns a comma seperated list of all signal names coming in
+    {
+        "name": "getSignalInNames",
+        "returns": "signal_name_1,signal_name_2"
+    },
+
+    // returns a comma seperated list of all signal names going out
+    {
+        "name": "getSignalOutNames",
+        "returns": "signal_name_1,signal_name_2"
+    },
+
+    // retrieves the streamtype
+    {
+        "name": "getStreamType",
+        "params": {
+            "signal_name": "signal_name"
+        },
+        "returns": {
+            "meta_type": "meta_type",
+            "properties": {
+                "names": "name_prop_1,name_prop_2,name_prop_3",
+                "values": "value_prop_1,value_prop_2,value_prop_3",
+                "types": "type_prop_1,type_prop_2,type_prop_3"
+            }
+        }
+    }
+ ]

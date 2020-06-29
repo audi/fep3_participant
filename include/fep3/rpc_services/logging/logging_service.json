@@ -1,0 +1,63 @@
+[
+    {
+        "name": "setLoggerFilter",
+        "params": {
+            "logger_name": "name",
+            "severity": 0,
+            "enable_sinks": "rpc,file,console"
+        },
+        "returns": 0 //sink creation error
+    },
+    //returns the current logging filter of the given loggername or filter
+    {
+        "name": "getLoggerFilter",
+        "params": {
+            "logger_name": "name"
+        },
+        "returns": {
+            "severity": 0,
+            "enable_sinks": "rpc,file,console"
+        }
+    },
+    //lists all available logger names
+    {
+        "name": "getLoggers",
+        "returns": "logger1,logger2,logger3"
+    },
+    //lists all available sinks
+    {
+        "name": "getSinks",
+        "returns": "rpc,file,console"
+    },
+    //lists all available properties
+    {
+        "name": "getSinkProperties",
+        "params": {
+            "sink_name": "name"
+        },
+        "returns": "prop1,prop2"
+    },
+    //gets the value of a specific sink property
+    {
+        "name": "getSinkProperty",
+        "params": {
+            "sink_name": "name",
+            "property_name": "property_name"
+        },
+        "returns": {
+            "value": "value",
+            "type": "type"
+        }
+    },
+    //sets a property of sink property
+    {
+        "name": "setSinkProperty",
+        "params": {
+            "sink_name": "name",
+            "property_name": "property_name",
+            "value": "value",
+            "type": "type"
+        },
+        "returns": 0 // error code
+    }
+]

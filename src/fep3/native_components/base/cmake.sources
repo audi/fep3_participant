@@ -1,0 +1,27 @@
+##################################################################
+# @file
+# @copyright AUDI AG
+#            All right reserved.
+#
+# This Source Code Form is subject to the terms of the
+# Mozilla Public License, v. 2.0.
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+##################################################################
+set(NATIVE_COMPONENTS_BASE_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/base)
+#set(NATIVE_COMPONENTS_BASE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/native_components/base)
+
+set(NATIVE_COMPONENTS_BASE_SOURCES_PRIVATE
+)
+
+set(NATIVE_COMPONENTS_BASE_SOURCES_PUBLIC
+)
+
+set(NATIVE_COMPONENTS_BASE_SOURCES ${NATIVE_COMPONENTS_BASE_SOURCES_PRIVATE} ${NATIVE_COMPONENTS_BASE_SOURCES_PUBLIC})
+source_group(native_components\\base FILES ${NATIVE_COMPONENTS_BASE_SOURCES})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${NATIVE_COMPONENTS_BASE_SOURCES})

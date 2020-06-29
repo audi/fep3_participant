@@ -1,0 +1,65 @@
+#######################################################################
+# @file 
+# Copyright &copy; AUDI AG. All rights reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+#######################################################################
+
+set(NATIVE_COMPONENTS_CONFIGURATION_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/configuration)
+set(COMPONENTS_CONFIGURATION_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/configuration)
+
+set(COMPONENTS_CONFIGURATION_SOURCES_PRIVATE      
+    ${NATIVE_COMPONENTS_CONFIGURATION_DIR}/configuration_service.h
+    ${NATIVE_COMPONENTS_CONFIGURATION_DIR}/configuration_service.cpp
+)
+
+set(COMPONENTS_CONFIGURATION_SOURCES_PUBLIC  
+    ${COMPONENTS_CONFIGURATION_INCLUDE_DIR}/configuration_service_intf.h    
+    ${COMPONENTS_CONFIGURATION_INCLUDE_DIR}/propertynode_intf.h    
+    ${COMPONENTS_CONFIGURATION_INCLUDE_DIR}/propertynode.h    
+    ${COMPONENTS_CONFIGURATION_INCLUDE_DIR}/propertynode_helper.h 
+)
+
+set(COMPONENTS_CONFIGURATION_SOURCES ${COMPONENTS_CONFIGURATION_SOURCES_PRIVATE} ${COMPONENTS_CONFIGURATION_SOURCES_PUBLIC})
+source_group(components\\configuration FILES ${COMPONENTS_CONFIGURATION_SOURCES})
+
+##################################################################
+# RPC
+##################################################################
+set(CONFIGURATION_RPC_RPC_BINARY_DIR ${PROJECT_BINARY_DIR}/include/fep3/rpc_services/configuration)
+set(CONFIGURATION_RPC_RPC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/rpc_services/configuration)
+
+# subtle difference: on unix the jsonrpc_generate_stub command silently fails if the output directory does not exist...
+file(MAKE_DIRECTORY ${CONFIGURATION_RPC_RPC_BINARY_DIR})
+
+jsonrpc_generate_server_stub(${CONFIGURATION_RPC_RPC_INCLUDE_DIR}/configuration.json
+                             fep3::rpc_stubs::RPCConfigurationService
+                             ${CONFIGURATION_RPC_RPC_BINARY_DIR}/configuration_service_stub.h)
+
+jsonrpc_generate_client_stub(${CONFIGURATION_RPC_RPC_INCLUDE_DIR}/configuration.json
+                             fep3::rpc_stubs::RPCConfigurationClient
+                             ${CONFIGURATION_RPC_RPC_BINARY_DIR}/configuration_client_stub.h)
+
+set(CONFIGURATION_RPC_RPC_SOURCES
+    ${CONFIGURATION_RPC_RPC_BINARY_DIR}/configuration_service_stub.h
+    ${CONFIGURATION_RPC_RPC_BINARY_DIR}/configuration_client_stub.h
+    ${CONFIGURATION_RPC_RPC_INCLUDE_DIR}/configuration.json
+    ${CONFIGURATION_RPC_RPC_INCLUDE_DIR}/configuration_rpc_intf_def.h)
+
+source_group(components\\configuration\\rpc FILES ${CONFIGURATION_RPC_RPC_SOURCES})
+
+install(FILES 
+    ${CONFIGURATION_RPC_RPC_BINARY_DIR}/configuration_service_stub.h
+    ${CONFIGURATION_RPC_RPC_BINARY_DIR}/configuration_client_stub.h
+    DESTINATION
+    include/fep3/rpc_services/configuration)
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_CONFIGURATION_SOURCES})
+set(FEP3_SOURCES ${FEP3_SOURCES} ${CONFIGURATION_RPC_RPC_SOURCES})

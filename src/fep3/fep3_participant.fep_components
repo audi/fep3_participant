@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright @ 2020 Audi AG. All rights reserved.
+
+       This Source Code Form is subject to the terms of the Mozilla
+       Public License, v. 2.0. If a copy of the MPL was not distributed
+       with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+   If it is not possible or desirable to put the notice in a particular file, then
+   You may include the notice in a location (such as a LICENSE file in a
+   relevant directory) where a recipient would be likely to look for such a notice.
+
+   You may add additional accurate notices of copyright ownership.
+-->
+<components xmlns="http://fep.vwgroup.com/fep_sdk/3.0/components">
+    <schema_version>1.0.0</schema_version>
+    <component>
+        <source type="built-in"/>
+        <iid>logging_service.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="built-in"/>
+        <iid>configuration_service.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="built-in"/>
+        <iid>service_bus.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="built-in"/>
+        <iid>clock_service.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="built-in"/>
+        <iid>clock_sync_service.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="built-in"/>
+        <iid>data_registry.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="built-in"/>
+        <iid>job_registry.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="built-in"/>
+        <iid>scheduler_service.arya.fep3.iid</iid>
+    </component>
+    <component>
+        <source type="cpp-plugin">
+        rti/fep3_connext_dds_plugin
+        </source>
+        <iid>simulation_bus.arya.fep3.iid</iid>
+    </component>
+</components>

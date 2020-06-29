@@ -1,0 +1,35 @@
+[
+  // returns a comma seperated list of the names of all registered clocks
+  {
+    "name": "getClockNames",
+    "returns": "name1,name2"
+  },
+
+  // returns the name of the current configured clock
+  {
+    "name": "getMainClockName",
+    "returns": "name1"
+  },
+
+  // return the time in nano sec for the given clock
+  // if clock_name is empty it will return the time of the current getCurrentClock
+  // if the clock does not exist it will return "-1"
+  {
+    "name": "getTime",
+    "params": {
+      "clock_name": "name1"
+    },
+    "returns": "int64_time" //nanosec
+  },
+  // return the type of the current clock
+  // continuous clock = 0
+  // discrete clock = 1
+  // if the clock does not exist it will return -1
+  {
+    "name": "getType",
+    "params": {
+        "clock_name": "name1"
+    },
+    "returns": 1 //the type continuous clock = 0,discrete clock = 1
+  }
+]

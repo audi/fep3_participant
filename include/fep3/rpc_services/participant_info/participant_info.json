@@ -1,0 +1,44 @@
+[
+    // returns a comma seperated list of RPC services
+    {
+        "name": "getRPCServices",
+        "returns": "service1;service2"
+    },
+
+    // returns the interface id of an RPC services
+    {
+        "name": "getRPCServiceIIDs",
+        "params": {
+            "rpc_service_name": "service1"
+        },
+        "returns": "iid1;iid2"
+    },
+
+    // retrieves the interface definition of the rpc components
+    {
+        "name": "getRPCServiceInterfaceDefinition",
+        "params": {
+            "rpc_service_name": "clock",
+            "service_iid": "clock.iid"
+        },
+        "returns": "json"
+    },
+
+    // returns the name of the
+    {
+        "name": "getName",
+        "returns": "participant_name"
+    },
+
+    // returns the current system name the participant is relying to
+    {
+        "name": "getSystemName",
+        "returns": "name_of_system"
+    },
+
+    // returns the version of the participant
+    {
+        "name": "getFEPVersion",
+        "returns": "version_string"
+    }
+]

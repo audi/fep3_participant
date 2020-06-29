@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components xmlns="http://fep.vwgroup.com/fep_sdk/3.0/components">
+    <schema_version>1.0.0</schema_version>
+    <component>
+        <source type="native"/>
+       
+    </component>
+    <component>
+        <source type="native"/>
+        <iid>test_component_native_2</iid>
+    </component>
+    <component>
+        <source type="native"/>
+        <iid>test_component_native_3</iid>
+    </component>
+    <component>
+        <source type="cpplugin">
+         file_ref_cpp_1
+        </source>
+        <iid>test_component_cpplugin_1</iid>
+    </component>
+    <component>
+        <source type="cpplugin">
+        file_ref_cpp_2
+        </source>
+        <iid>test_component_cpplugin_2</iid>
+    </component>
+    <component>
+        <source type="cplugin">
+            file_ref_c_1
+        </source>
+        <iid>test_component_clugin_1</iid>
+    </component>
+    <component>
+        <iid>test_component_clugin_2</iid>
+    </component>
+    <component>
+        <source type="cplugin">
+            file_ref_3
+        </source>
+        <iid>test_component_clugin_3</iid>
+    </component>
+</components>

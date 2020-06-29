@@ -1,0 +1,40 @@
+[
+    // register a Slave
+    // for before/update/after events
+    {
+        "name": "registerSyncSlave",
+        "params": {
+            "slave_name": "name1",
+            "event_id_flag": 1
+        },
+        "returns": 1
+    },
+    // unregister a Slave
+    {
+        "name": "unregisterSyncSlave",
+        "params": {
+            "slave_name": "name1"
+        },
+        "returns": 1
+    },
+    //
+    {
+        "name": "slaveSyncedEvent",
+        "params": {
+            "slave_name": "name1",
+            "new_time": "int64_time"
+        },
+        "returns": 1 //nanosec
+    },
+    // get the clock sync master clock type
+    {
+        "name": "getMasterType",
+        "returns": 1 //continuous = 0, discrete = 1 ... time update events are sent for discrete type only
+    },
+    // get the clock sync master time
+    {
+        "name": "getMasterTime",
+        "returns": "int64_time" //nanosec
+    }
+
+]

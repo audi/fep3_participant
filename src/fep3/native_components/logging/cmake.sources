@@ -1,0 +1,109 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(NATIVE_COMPONENTS_LOGGING_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/logging)
+set(COMPONENTS_LOGGING_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/logging)
+
+
+set(COMPONENTS_LOGGING_SOURCES_PRIVATE_SINKS
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/sinks/logging_sink_common.hpp
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/sinks/logging_sink_file.hpp
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/sinks/logging_sink_console.hpp
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/sinks/logging_sink_rpc.hpp
+)
+
+set(COMPONENTS_LOGGING_SOURCES_PRIVATE
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_service.cpp
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_service.h
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_rpc_service.cpp
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_rpc_service.h
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_config.cpp
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_config.h
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_queue.cpp
+    ${NATIVE_COMPONENTS_LOGGING_DIR}/logging_queue.h
+)
+
+set(COMPONENTS_LOGGING_SOURCES_PUBLIC  
+    ${COMPONENTS_LOGGING_INCLUDE_DIR}/logging_service_intf.h
+    ${COMPONENTS_LOGGING_INCLUDE_DIR}/easy_logger.h
+)
+
+set(COMPONENTS_LOGGING_SOURCES ${COMPONENTS_LOGGING_SOURCES_PRIVATE}
+                               ${COMPONENTS_LOGGING_SOURCES_PUBLIC}
+                               ${COMPONENTS_LOGGING_SOURCES_PRIVATE_SINKS})
+
+source_group(components\\logging\\private FILES ${COMPONENTS_LOGGING_SOURCES_PRIVATE})
+source_group(components\\logging\\sinks FILES ${COMPONENTS_LOGGING_SOURCES_PRIVATE_SINKS})
+source_group(components\\logging\\public FILES ${COMPONENTS_LOGGING_SOURCES_PUBLIC})
+
+##################################################################
+# RPC
+##################################################################
+set(COMPONENTS_LOGGING_RPC_BINARY_DIR ${PROJECT_BINARY_DIR}/include/fep3/rpc_services/logging)
+set(COMPONENTS_LOGGING_RPC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/rpc_services/logging)
+
+# subtle difference: on unix the jsonrpc_generate_stub command silently fails if the output directory does not exist...
+file(MAKE_DIRECTORY ${COMPONENTS_LOGGING_RPC_BINARY_DIR})
+
+jsonrpc_generate_server_stub(${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_service.json
+                             fep3::rpc_stubs::RPCLoggingServiceStub
+                             ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_service_stub.h)
+                             
+jsonrpc_generate_client_stub(${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_service.json
+                             fep3::rpc_stubs::RPCLoggingClientStub
+                             ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_client_stub.h)
+                             
+jsonrpc_generate_server_stub(${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_rpc_sink_client.json
+                             fep3::rpc_stubs::RPCLoggingRPCSinkClientServiceStub
+                             ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_client_service_stub.h)
+                             
+jsonrpc_generate_client_stub(${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_rpc_sink_client.json
+                             fep3::rpc_stubs::RPCLoggingRPCSinkClientClientStub
+                             ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_client_client_stub.h)
+
+jsonrpc_generate_server_stub(${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_rpc_sink_service.json
+                             fep3::rpc_stubs::RPCLoggingRPCSinkServiceServiceStub
+                             ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_service_service_stub.h)
+                             
+jsonrpc_generate_client_stub(${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_rpc_sink_service.json
+                             fep3::rpc_stubs::RPCLoggingRPCSinkServiceClientStub
+                             ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_service_client_stub.h)
+
+set(COMPONENTS_LOGGING_RPC_SOURCES
+    ${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_service.json
+    ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_service_stub.h
+    ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_client_stub.h
+
+    ${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_rpc_sink_client.json
+    ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_client_service_stub.h
+    ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_client_client_stub.h
+
+    ${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_rpc_sink_service.json
+    ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_service_service_stub.h
+    ${COMPONENTS_LOGGING_RPC_BINARY_DIR}/logging_rpc_sink_service_client_stub.h
+
+    ${COMPONENTS_LOGGING_RPC_INCLUDE_DIR}/logging_service_rpc_intf_def.h
+)
+
+source_group(components\\logging\\public\\rpc FILES ${COMPONENTS_LOGGING_RPC_SOURCES})
+
+install(FILES 
+    ${COMPONENTS_LOGGING_RPC_SOURCES}
+    DESTINATION
+    include/fep3/rpc_services/logging
+)
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_LOGGING_SOURCES})
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_LOGGING_RPC_SOURCES})
+set(FEP3_SOURCEE ${FEP3_SOURCES} ${COMPONENTS_LOGGING_SOURCES_PRIVATE_SINKS})

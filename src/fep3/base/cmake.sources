@@ -1,0 +1,57 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(FEP3_BASE_DIR ${PROJECT_SOURCE_DIR}/src/fep3/base)
+set(FEP3_BASE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/base)
+
+set(FEP3_BASE_SOURCES_PRIVATE
+    ${FEP3_BASE_DIR}/binary_info/binary_info.h
+    ${FEP3_BASE_DIR}/binary_info/binary_info.cpp
+    ${FEP3_BASE_DIR}/environment_variable/environment_variable.h
+    ${FEP3_BASE_DIR}/environment_variable/environment_variable.cpp
+    ${FEP3_BASE_DIR}/file/file.h
+    ${FEP3_BASE_DIR}/file/file.cpp
+)
+
+set(FEP3_BASE_SOURCES_PUBLIC
+    # directory "properties"
+    ${FEP3_BASE_INCLUDE_DIR}/properties/properties.h
+    ${FEP3_BASE_INCLUDE_DIR}/properties/properties_intf.h
+    ${FEP3_BASE_INCLUDE_DIR}/properties/property_type.h
+    ${FEP3_BASE_INCLUDE_DIR}/properties/property_type_conversion.h
+    ${FEP3_BASE_INCLUDE_DIR}/properties/c_access_wrapper/properties_c_access_wrapper.h
+    ${FEP3_BASE_INCLUDE_DIR}/properties/c_intf/properties_c_intf.h
+
+    # directory "sample"
+    ${FEP3_BASE_INCLUDE_DIR}/sample/data_sample.h
+    ${FEP3_BASE_INCLUDE_DIR}/sample/data_sample_intf.h
+    ${FEP3_BASE_INCLUDE_DIR}/sample/raw_memory.h
+    ${FEP3_BASE_INCLUDE_DIR}/sample/raw_memory_intf.h
+    ${FEP3_BASE_INCLUDE_DIR}/sample/c_access_wrapper/data_sample_c_access_wrapper.h
+    ${FEP3_BASE_INCLUDE_DIR}/sample/c_intf/data_sample_c_intf.h
+    ${FEP3_BASE_INCLUDE_DIR}/sample/c_access_wrapper/raw_memory_c_access_wrapper.h
+    ${FEP3_BASE_INCLUDE_DIR}/sample/c_intf/raw_memory_c_intf.h
+
+    # directory "streamtype"
+    ${FEP3_BASE_INCLUDE_DIR}/streamtype/default_streamtype.h
+    ${FEP3_BASE_INCLUDE_DIR}/streamtype/streamtype.h
+    ${FEP3_BASE_INCLUDE_DIR}/streamtype/streamtype_intf.h
+    ${FEP3_BASE_INCLUDE_DIR}/streamtype/c_access_wrapper/stream_type_c_access_wrapper.h
+    ${FEP3_BASE_INCLUDE_DIR}/streamtype/c_intf/stream_type_c_intf.h
+)
+
+set(FEP3_BASE_SOURCES ${FEP3_BASE_SOURCES_PRIVATE} ${FEP3_BASE_SOURCES_PUBLIC})
+source_group(base FILES ${FEP3_BASE_SOURCES})
+
+##################################################################################################################
+# Set up the variable FEP3_BASE_SOURCES NOT FEP 3
+##################################################################################################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${FEP3_BASE_SOURCES})

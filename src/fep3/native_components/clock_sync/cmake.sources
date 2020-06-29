@@ -1,0 +1,80 @@
+##################################################################
+# @file 
+# @copyright Audi AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(NATIVE_COMPONENTS_CLOCK_SYNC_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/clock_sync)
+set(NATIVE_COMPONENTS_CLOCK_SYNC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/clock_sync)
+
+set(NATIVE_COMPONENTS_CLOCK_SYNC_SOURCES_PRIVATE 
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_DIR}/clock_sync_service.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_DIR}/clock_sync_service.cpp
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_DIR}/interpolation_time.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_DIR}/interpolation_time.cpp
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_DIR}/master_on_demand_clock_client.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_DIR}/master_on_demand_clock_client.cpp
+)
+
+set(NATIVE_COMPONENTS_CLOCK_SYNC_SOURCES_PUBLIC
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_INCLUDE_DIR}/clock_sync_service_intf.h
+)
+
+set(NATIVE_COMPONENTS_CLOCK_SYNC_SOURCES ${NATIVE_COMPONENTS_CLOCK_SYNC_SOURCES_PRIVATE} ${NATIVE_COMPONENTS_CLOCK_SYNC_SOURCES_PUBLIC})
+source_group(components\\clock_sync FILES ${NATIVE_COMPONENTS_CLOCK_SYNC_SOURCES})
+
+##################################################################
+# RPC
+##################################################################
+set(NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR ${PROJECT_BINARY_DIR}/include/fep3/rpc_services/clock_sync)
+set(NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/rpc_services/clock_sync)
+
+# subtle difference: on unix the jsonrpc_generate_stub command silently fails if the output directory does not exist...
+file(MAKE_DIRECTORY ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR})
+
+jsonrpc_generate_server_stub(${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR}/clock_sync_master.json
+                             fep3::rpc_stubs::RPCClockSyncMasterServiceStub
+                             ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_master_service_stub.h)
+
+jsonrpc_generate_client_stub(${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR}/clock_sync_master.json
+                             fep3::rpc_stubs::RPCClockSyncMasterClientStub
+                             ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_master_client_stub.h)
+
+jsonrpc_generate_server_stub(${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR}/clock_sync_slave.json
+                             fep3::rpc_stubs::RPCClockSyncSlaveServiceStub
+                             ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_slave_service_stub.h)
+
+jsonrpc_generate_client_stub(${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR}/clock_sync_slave.json
+                             fep3::rpc_stubs::RPCClockSyncSlaveClientStub
+                             ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_slave_client_stub.h)
+
+set(NATIVE_COMPONENTS_CLOCK_SYNC_RPC_SOURCES
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_master_service_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_master_client_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_slave_service_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_slave_client_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR}/clock_sync_master.json
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR}/clock_sync_slave.json
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_INCLUDE_DIR}/clock_sync_service_rpc_intf_def.h
+)
+
+source_group(components\\clock_sync\\rpc FILES ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_SOURCES})
+
+install(FILES 
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_master_service_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_master_client_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_slave_service_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_BINARY_DIR}/clock_sync_slave_client_stub.h
+    DESTINATION
+    include/fep3/rpc_services/clock_sync)
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${NATIVE_COMPONENTS_CLOCK_SYNC_SOURCES})
+set(FEP3_SOURCES ${FEP3_SOURCES} ${NATIVE_COMPONENTS_CLOCK_SYNC_RPC_SOURCES})

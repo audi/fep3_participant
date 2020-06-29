@@ -1,0 +1,77 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(NATIVE_COMPONENTS_CLOCK_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/clock)
+set(NATIVE_COMPONENTS_CLOCK_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/clock)
+
+set(NATIVE_COMPONENTS_CLOCK_SOURCES_PRIVATE 
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_clock_service.h
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_clock_service.cpp
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_clock_service_master.h
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_clock_service_master.cpp
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_clock_registry.h
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_clock_registry.cpp
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_system_clock.h
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_system_clock.cpp
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_system_clock_discrete.h
+    ${NATIVE_COMPONENTS_CLOCK_DIR}/local_system_clock_discrete.cpp
+)
+
+set(NATIVE_COMPONENTS_CLOCK_SOURCES_PUBLIC
+    ${NATIVE_COMPONENTS_CLOCK_INCLUDE_DIR}/clock_base.h
+    ${NATIVE_COMPONENTS_CLOCK_INCLUDE_DIR}/clock_service_intf.h
+    ${NATIVE_COMPONENTS_CLOCK_INCLUDE_DIR}/clock_registry_intf.h
+)
+
+set(NATIVE_COMPONENTS_CLOCK_SOURCES ${NATIVE_COMPONENTS_CLOCK_SOURCES_PRIVATE} ${NATIVE_COMPONENTS_CLOCK_SOURCES_PUBLIC})
+source_group(components\\clock FILES ${NATIVE_COMPONENTS_CLOCK_SOURCES})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${NATIVE_COMPONENTS_CLOCK_SOURCES})
+
+##################################################################
+# RPC
+##################################################################
+set(NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR ${PROJECT_BINARY_DIR}/include/fep3/rpc_services/clock)
+set(NATIVE_COMPONENTS_CLOCK_RPC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/rpc_services/clock)
+
+# subtle difference: on unix the jsonrpc_generate_stub command silently fails if the output directory does not exist...
+file(MAKE_DIRECTORY ${NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR})
+
+jsonrpc_generate_server_stub(${NATIVE_COMPONENTS_CLOCK_RPC_INCLUDE_DIR}/clock.json
+                             fep3::rpc_stubs::RPCClockServiceStub
+                             ${NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR}/clock_service_stub.h)
+jsonrpc_generate_client_stub(${NATIVE_COMPONENTS_CLOCK_RPC_INCLUDE_DIR}/clock.json
+                             fep3::rpc_stubs::RPCClockClientStub
+                             ${NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR}/clock_client_stub.h)
+
+set(NATIVE_COMPONENTS_CLOCK_RPC_SOURCES
+    ${NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR}/clock_service_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR}/clock_client_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_RPC_INCLUDE_DIR}/clock.json
+    ${NATIVE_COMPONENTS_CLOCK_RPC_INCLUDE_DIR}/clock_service_rpc_intf_def.h
+)
+
+source_group(components\\clock\\rpc FILES ${NATIVE_COMPONENTS_CLOCK_RPC_SOURCES})
+
+install(FILES 
+    ${NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR}/clock_service_stub.h
+    ${NATIVE_COMPONENTS_CLOCK_RPC_BINARY_DIR}/clock_client_stub.h
+    DESTINATION
+    include/fep3/rpc_services/clock)
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${NATIVE_COMPONENTS_CLOCK_SOURCES})
+set(FEP3_SOURCES ${FEP3_SOURCES} ${NATIVE_COMPONENTS_CLOCK_RPC_SOURCES})

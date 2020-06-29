@@ -1,0 +1,30 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(COMPONENTS_SIMULATION_BUS_DIR ${PROJECT_SOURCE_DIR}/src/fep3/components/simulation_bus)
+set(COMPONENTS_SIMULATION_BUS_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/simulation_bus)
+
+set(COMPONENTS_SIMULATION_BUS_SOURCES_PRIVATE
+)
+
+set(COMPONENTS_SIMULATION_BUS_SOURCES_PUBLIC
+    ${COMPONENTS_SIMULATION_BUS_INCLUDE_DIR}/simulation_bus_intf.h
+    ${COMPONENTS_SIMULATION_BUS_INCLUDE_DIR}/c_intf/simulation_bus_c_intf.h
+    ${COMPONENTS_SIMULATION_BUS_INCLUDE_DIR}/c_access_wrapper/simulation_bus_c_access_wrapper.h
+)
+
+set(COMPONENTS_SIMULATION_BUS_SOURCES ${COMPONENTS_SIMULATION_BUS_SOURCES_PRIVATE} ${COMPONENTS_SIMULATION_BUS_SOURCES_PUBLIC})
+source_group(components\\simulation_bus FILES ${COMPONENTS_SIMULATION_BUS_SOURCES})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${COMPONENTS_SIMULATION_BUS_SOURCES})

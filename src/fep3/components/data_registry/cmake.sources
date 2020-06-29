@@ -1,0 +1,29 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(DATA_REGISTRY_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/data_registry)
+set(DATA_REGISTRY_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/data_registry)
+
+set(DATA_REGISTRY_SOURCES_PRIVATE
+)
+
+set(DATA_REGISTRY_SOURCES_PUBLIC
+    ${DATA_REGISTRY_INCLUDE_DIR}/data_registry_intf.h
+)
+
+set(DATA_REGISTRY_SOURCES ${DATA_REGISTRY_SOURCES_PRIVATE} ${DATA_REGISTRY_SOURCES_PUBLIC})
+source_group(components\\data_registry FILES ${DATA_REGISTRY_SOURCES})
+
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${DATA_REGISTRY_SOURCES})

@@ -1,0 +1,35 @@
+##################################################################
+# @file 
+# @copyright AUDI AG
+#            All right reserved.
+# 
+# This Source Code Form is subject to the terms of the 
+# Mozilla Public License, v. 2.0. 
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# 
+##################################################################
+set(NATIVE_COMPONENTS_SIMULATION_BUS_DIR ${PROJECT_SOURCE_DIR}/src/fep3/native_components/simulation_bus)
+set(NATIVE_COMPONENTS_SIMULATION_BUS_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/fep3/components/simulation_bus)
+
+set(NATIVE_COMPONENTS_SIMULATION_BUS_SOURCES_PRIVATE
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/data_item_queue_base.h
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/data_item_queue.h
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/simulation_bus.h
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/simulation_bus.cpp
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/simbus_datareader.h
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/simbus_datareader.cpp
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/simbus_datawriter.h
+    ${NATIVE_COMPONENTS_SIMULATION_BUS_DIR}/simbus_datawriter.cpp
+)
+
+set(NATIVE_COMPONENTS_SIMULATION_BUS_SOURCES_PUBLIC
+)
+
+set(NATIVE_COMPONENTS_SIMULATION_BUS_SOURCES ${NATIVE_COMPONENTS_SIMULATION_BUS_SOURCES_PRIVATE} ${NATIVE_COMPONENTS_SIMULATION_BUS_SOURCES_PUBLIC})
+source_group(components\\simulation_bus FILES ${NATIVE_COMPONENTS_SIMULATION_BUS_SOURCES})
+
+######################################
+# Set up the variable
+######################################
+set(FEP3_SOURCES ${FEP3_SOURCES} ${NATIVE_COMPONENTS_SIMULATION_BUS_SOURCES})

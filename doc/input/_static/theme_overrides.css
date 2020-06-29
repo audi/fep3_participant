@@ -1,0 +1,25 @@
+/*#######################################################################
+# @file
+# Copyright &copy; Audi AG. All rights reserved.
+#
+# This Source Code Form is subject to the terms of the
+# Mozilla Public License, v. 2.0.
+# If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+#######################################################################*/
+
+/* override table width restrictions */
+@media screen and (min-width: 767px) {
+
+    .wy-table-responsive table td {
+       /* !important prevents the common CSS stylesheets from overriding
+          this as on RTD they are loaded after this stylesheet */
+       white-space: normal !important;
+    }
+ 
+ }
+
+.wy-nav-content {
+   max-width: none;
+}

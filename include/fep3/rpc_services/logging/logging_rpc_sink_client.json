@@ -1,0 +1,14 @@
+[
+  // sends the logging message to the client
+  {
+    "name": "onLog",
+    "params": {
+      "timestamp": "log_time",
+      "severity": 0,
+      "participant": "name",
+      "logger_name": "logger",
+      "description": "message"
+    },
+    "returns": 0 //message_received info
+  }
+]
